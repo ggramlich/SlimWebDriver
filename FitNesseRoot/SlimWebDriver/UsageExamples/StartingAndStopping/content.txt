@@ -1,0 +1,12 @@
+!define TEST_SYSTEM {slim}
+
+!path ${FITNESSE_ROOTPATH}/bin
+!path ${FITNESSE_ROOTPATH}/lib/*jar
+
+|import       |
+|slimwebdriver|
+
+!|script|slim web driver      |firefox           |
+|get url|http://localhost:${FITNESSE_PORT}/files/|
+|check  |title                |Files: files/     |
+|close web driver                                |
