@@ -1,4 +1,4 @@
-!|script       |slim web driver       |firefox          |
+!|script       |slim web driver       |${BROWSER}       |
 |open url      |http://localhost:${FITNESSE_PORT}/files/|
 |check         |title                 |=~/.*fil.*/      |
 |title contains|fil                                     |

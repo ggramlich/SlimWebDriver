@@ -1,1 +1,13 @@
-!contents -R2 -g -p -f -h
+The http://localhost:${FITNESSE_PORT}/files/ page contains a div with css class sidebar which contains the anchor tag with text !-FrontPage-!
+
+!|script     |slim web driver   |${BROWSER}           |
+|open url    |http://localhost:${FITNESSE_PORT}/files/|
+|$element=   |find element      |class name:sidebar   |
+|push fixture                                         |
+|start       |$element                                |
+|$subElement=|find element      |tag name:a           |
+|start       |$subElement                             |
+|check       |get text          |FrontPage            |
+|pop fixture                                          |
+|#now we are back on the webdriver                    |
+|check       |title             |Files: files/        |

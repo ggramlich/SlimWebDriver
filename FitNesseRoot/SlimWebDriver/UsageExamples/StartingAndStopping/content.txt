@@ -13,14 +13,14 @@ The following webdriver types (given as an argument to the slim web driver) can 
  * ''android''
  * ''iphone''
 
-!|script |slim web driver      |firefox           |
+!|script |slim web driver      |${BROWSER}        |
 |open url|http://localhost:${FITNESSE_PORT}/files/|
 |check   |title                |Files: files/     |
 |close window                                     |
 
 When you have not closed the web driver and start a new instance of the fixture, by default it does not open a new browser window. This makes it possible to change to a different fixture in the mean time and back to <SlimWebDriver, without loosing the access to the open window. It also speeds up consecutive execution of multiple separate tests (on different !-FitNesse-! test pages) a lot, if the browser is opened and closed only once.
 
-!|script |slim web driver      |firefox           |
+!|script |slim web driver      |${BROWSER}        |
 |open url|http://localhost:${FITNESSE_PORT}/files/|
 |check   |title                |Files: files/     |
 

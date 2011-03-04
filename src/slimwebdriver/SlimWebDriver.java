@@ -12,7 +12,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
+import fitnesse.slim.Slim;
+
 public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot {
+	private static final ByConverter BY_CONVERTER = new ByConverter();
+
 	private WebDriver webDriver;
 
 	private WebDriverProvider provider;
@@ -23,7 +27,12 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 
 	public SlimWebDriver(String browserType) {
 		provider = WebDriverProvider.INSTANCE;
-		this.setBrowserType(browserType);
+		setBrowserType(browserType);
+		registerByConverter();
+	}
+
+	private void registerByConverter() {
+		Slim.addConverter(By.class, BY_CONVERTER);
 	}
 
 	private void setBrowserType(String browserType) {
@@ -48,6 +57,10 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 
 	public void stopWebDriver() {
 		provider.quit(webDriver);
+	}
+
+	public void stopAllWebDrivers() {
+		provider.quit();
 	}
 
 	public void get(String url) {
