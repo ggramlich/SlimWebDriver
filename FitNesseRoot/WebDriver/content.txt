@@ -1,0 +1,3 @@
+WebDriver is the successor of the [[Selenium remote control][http://seleniumhq.org/]] and allows the user to access multiple browsers with a more object oriented api.
+
+[[!-Selenium 2 WebDriver homepage-!][http://seleniumhq.org/docs/09_webdriver.html]]

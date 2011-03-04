@@ -6,8 +6,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import slimwebdriver.exceptions.UsupportedWebDriverException;
 
 public class SlimWebDriver {
-	private final String browserType;
+	private String browserType = "";
 	private WebDriver webDriver;
+
+	private WebDriverProvider provider;
+
+	public SlimWebDriver() {
+		this("firefox");
+	}
 
 	public SlimWebDriver(String browserTyp) {
 		this.browserType = browserTyp;
@@ -21,12 +27,18 @@ public class SlimWebDriver {
 		return webDriver().getTitle();
 	}
 
-	public void closeWebDriver() {
+	public void closeWindow() {
 		if (webDriver == null) {
 			return;
 		}
 		webDriver.close();
-		webDriver = null;
+	}
+
+	public void stopWebDriver() {
+		if (webDriver == null) {
+			return;
+		}
+		webDriver.quit();
 	}
 
 	private WebDriver webDriver() {

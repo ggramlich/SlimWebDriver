@@ -1,0 +1,5 @@
+!|script       |slim web driver       |firefox          |
+|get url       |http://localhost:${FITNESSE_PORT}/files/|
+|check         |title                 |=~/.*fil.*/      |
+|title contains|fil                                     |
+|close window                                           |

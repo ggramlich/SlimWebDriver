@@ -1,3 +1,3 @@
 !1 Welcome to SlimWebDriver
 
-SlimWebDriver is a set of fixtures for the [[Slim][http://fitnesse.org/FitNesse.UserGuide.SliM]] test runner that uses the [[!-Selenium 2 WebDriver-!][http://seleniumhq.org/docs/09_webdriver.html]].
+SlimWebDriver is a set of fixtures for the [[Slim][http://fitnesse.org/FitNesse.UserGuide.SliM]] test runner that uses the [[Selenium 2][http://seleniumhq.org/docs/09_webdriver.html]] WebDriver.

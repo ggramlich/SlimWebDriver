@@ -1,5 +1,25 @@
+The [[!-SlimWebDriver-!][<SlimWebDriver]] is a fixture that calls into a [[!-WebDriver-!][<WebDriver]] instance.
+You can use it in a script table or in a library table.
+
+When you first access a page with ''get url'', it opens the browser window. With the ''close window'' command, you can close the current browser window.
+
+'''TODO''' browsertype argument.
 
 !|script|slim web driver      |firefox           |
 |get url|http://localhost:${FITNESSE_PORT}/files/|
 |check  |title                |Files: files/     |
-|close web driver                                |
+|close window                                    |
+
+When you have not closed the web driver and start a new instance of the fixture, by default it does not open a new browser window. This makes it possible to change to a different fixture in the mean time and back to <SlimWebDriver, without loosing the access to the open window. It also speeds up consecutive execution of multiple separate tests (on different !-FitNesse-! test pages) a lot, if the browser is opened and closed only once.
+
+!|script|slim web driver      |firefox           |
+|get url|http://localhost:${FITNESSE_PORT}/files/|
+|check  |title                |Files: files/     |
+
+!|script|slim web driver                                |
+|get url|http://www.google.com                          |
+|start  |slim web driver                                |
+|get url|http://localhost:${FITNESSE_PORT}/SlimWebDriver|
+
+You can stop web driver and thus close all browser windows with ''stop web driver''.
+You should put this into the [[!-SuiteTearDown-!][<SlimWebDriver.SuiteTearDown]].
