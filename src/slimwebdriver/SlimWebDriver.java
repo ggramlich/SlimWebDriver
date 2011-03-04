@@ -14,7 +14,7 @@ import org.openqa.selenium.WebElement;
 
 import fitnesse.slim.Slim;
 
-public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot {
+public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot, FindElementInformation {
 	private static final ByConverter BY_CONVERTER = new ByConverter();
 
 	private WebDriver webDriver;
@@ -80,7 +80,7 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public WebElement findElement(By by) {
-		return webDriver.findElement(by);
+		return new SlimWebElement(webDriver.findElement(by));
 	}
 
 	public String getPageSource() {
@@ -130,6 +130,14 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	// TODO - provide method that saves a file
 	public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
 		return ((TakesScreenshot) webDriver).getScreenshotAs(target);
+	}
+
+	public boolean hasElement(By by) {
+		return numberOfElements(by) > 0;
+	}
+
+	public int numberOfElements(By by) {
+		return findElements(by).size();
 	}
 
 }

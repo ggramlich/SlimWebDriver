@@ -10,12 +10,12 @@ import fitnesse.slim.Converter;
 
 public class ByConverter implements Converter {
 
+	private static final Pattern PATTERN = Pattern.compile("^(.+)\\:\\s*(.+)");
 	private static final BySelector BY_SELECTOR = new BySelector();
 
 	@Override
 	public Object fromString(String byString) {
-		Pattern pattern = Pattern.compile("^(.+)\\:\\s*(.+)");
-		Matcher matcher = pattern.matcher(byString);
+		Matcher matcher = PATTERN.matcher(byString);
 		if (!matcher.matches()) {
 			throw new ByConverterException(byString);
 		}

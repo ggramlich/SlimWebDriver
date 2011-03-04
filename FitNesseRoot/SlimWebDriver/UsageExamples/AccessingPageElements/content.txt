@@ -1,6 +1,20 @@
 The http://localhost:${FITNESSE_PORT}/files/ page contains a div with css class sidebar which contains the anchor tag with text !-FrontPage-!
 
-!|script     |slim web driver   |${BROWSER}           |
+We can use the <WebDriver ''find element'' method and Slim's ''push fixture'' and ''pop fixture'' methods directly.
+The ''By'' locators are written down like this:
+'''method:selector value'''
+
+Where method is one of
+ * class name
+ * css selector
+ * id
+ * link text
+ * partial link text
+ * name
+ * tag name
+ * xpath
+
+!|script     |slim web driver   |htmlunit           |
 |open url    |http://localhost:${FITNESSE_PORT}/files/|
 |$element=   |find element      |class name:sidebar   |
 |push fixture                                         |
@@ -11,3 +25,5 @@ The http://localhost:${FITNESSE_PORT}/files/ page contains a div with css class 
 |pop fixture                                          |
 |#now we are back on the webdriver                    |
 |check       |title             |Files: files/        |
+|ensure|has element|class name:sidebar|
+|reject|has element|class name:aaa|
