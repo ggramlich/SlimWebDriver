@@ -23,49 +23,42 @@ public class WebDriverProvider {
 
 	enum DRIVER {
 		firefox {
-			@Override
 			WebDriver create() {
 				return new FirefoxDriver();
 			}
 		},
 
 		htmlunit {
-			@Override
 			WebDriver create() {
 				return new HtmlUnitDriver(true);
 			}
 		},
 
 		ie {
-			@Override
 			WebDriver create() {
 				return new InternetExplorerDriver();
 			}
 		},
 
 		internetexplorer {
-			@Override
 			WebDriver create() {
 				return new InternetExplorerDriver();
 			}
 		},
 
 		chrome {
-			@Override
 			WebDriver create() {
 				return new ChromeDriver();
 			}
 		},
 
 		android {
-			@Override
 			WebDriver create() {
 				return new AndroidDriver();
 			}
 		},
 
 		iphone {
-			@Override
 			WebDriver create() throws Exception {
 				return new IPhoneDriver();
 			}
