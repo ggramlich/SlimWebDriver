@@ -1,57 +1,44 @@
 package slimwebdriver;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
-import slimwebdriver.exceptions.UsupportedWebDriverException;
 
 public class SlimWebDriver {
-	private String browserType = "";
 	private WebDriver webDriver;
 
 	private WebDriverProvider provider;
 
 	public SlimWebDriver() {
-		this("firefox");
+		this(null);
 	}
 
-	public SlimWebDriver(String browserTyp) {
-		this.browserType = browserTyp;
+	public SlimWebDriver(String browserType) {
+		provider = WebDriverProvider.INSTANCE;
+		this.setBrowserType(browserType);
 	}
 
-	public void getUrl(String url) {
-		webDriver().get(url);
+	private void setBrowserType(String browserType) {
+		if (StringUtils.isEmpty(browserType)) {
+			webDriver = provider.getOnlyDriver();
+		} else {
+			webDriver = provider.getDriver(browserType);
+		}
+	}
+
+	public void openUrl(String url) {
+		webDriver.get(url);
 	}
 
 	public String title() {
-		return webDriver().getTitle();
+		return webDriver.getTitle();
 	}
 
 	public void closeWindow() {
-		if (webDriver == null) {
-			return;
-		}
-		webDriver.close();
+		provider.closeWindow(webDriver);
 	}
 
 	public void stopWebDriver() {
-		if (webDriver == null) {
-			return;
-		}
-		webDriver.quit();
+		provider.quit(webDriver);
 	}
 
-	private WebDriver webDriver() {
-		if (webDriver == null) {
-			webDriver = createWebDriver();
-		}
-		return webDriver;
-	}
-
-	private WebDriver createWebDriver() {
-		if ("firefox".equalsIgnoreCase(browserType)) {
-			return new FirefoxDriver();
-		}
-		throw new UsupportedWebDriverException(browserType);
-	}
 }
