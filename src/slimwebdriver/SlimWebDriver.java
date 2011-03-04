@@ -1,9 +1,18 @@
 package slimwebdriver;
 
-import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.WebDriver;
+import java.util.List;
+import java.util.Set;
 
-public class SlimWebDriver {
+import org.apache.commons.lang.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+
+public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot {
 	private WebDriver webDriver;
 
 	private WebDriverProvider provider;
@@ -30,7 +39,7 @@ public class SlimWebDriver {
 	}
 
 	public String title() {
-		return webDriver.getTitle();
+		return getTitle();
 	}
 
 	public void closeWindow() {
@@ -39,6 +48,75 @@ public class SlimWebDriver {
 
 	public void stopWebDriver() {
 		provider.quit(webDriver);
+	}
+
+	public void get(String url) {
+		webDriver.get(url);
+	}
+
+	public String getCurrentUrl() {
+		return webDriver.getCurrentUrl();
+	}
+
+	public String getTitle() {
+		return webDriver.getTitle();
+	}
+
+	public List<WebElement> findElements(By by) {
+		return webDriver.findElements(by);
+	}
+
+	public WebElement findElement(By by) {
+		return webDriver.findElement(by);
+	}
+
+	public String getPageSource() {
+		return webDriver.getPageSource();
+	}
+
+	public Set<String> getWindowHandles() {
+		return webDriver.getWindowHandles();
+	}
+
+	public String getWindowHandle() {
+		return webDriver.getWindowHandle();
+	}
+
+	public TargetLocator switchTo() {
+		return webDriver.switchTo();
+	}
+
+	public Navigation navigate() {
+		return webDriver.navigate();
+	}
+
+	public Options manage() {
+		return webDriver.manage();
+	}
+
+	public void close() {
+		closeWindow();
+	}
+
+	public void quit() {
+		stopWebDriver();
+	}
+
+	public Object executeScript(String script, Object... args) {
+		return ((JavascriptExecutor) webDriver).executeScript(script, args);
+	}
+
+	public Object executeAsyncScript(String script, Object... args) {
+		return ((JavascriptExecutor) webDriver).executeAsyncScript(script, args);
+	}
+
+	public boolean isJavascriptEnabled() {
+		return ((JavascriptExecutor) webDriver).isJavascriptEnabled();
+	}
+
+	// TODO - provide method that saves a file
+	public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+		return ((TakesScreenshot) webDriver).getScreenshotAs(target);
 	}
 
 }
