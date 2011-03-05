@@ -1,5 +1,7 @@
 package slimwebdriver;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.util.List;
 import java.util.Set;
 
@@ -7,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.RenderedWebElement;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -15,15 +18,14 @@ import org.openqa.selenium.WebElement;
 import slimwebdriver.exceptions.NoWebElementChosenException;
 import fitnesse.slim.Slim;
 
-public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot, FindElementInformation,
-	WebElement {
+public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot, SlimWebElement {
 	private static final ByConverter BY_CONVERTER = new ByConverter();
 
 	private WebDriver webDriver;
 
 	private WebDriverProvider provider;
 
-	private WebElement element = new NullWebElement();
+	private SlimWebElement element = new NullWebElement();
 
 	public SlimWebDriver() {
 		this(null);
@@ -91,7 +93,7 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return element.findElements(by);
 	}
 
-	public WebElement findElement(By by) {
+	public SlimWebElement findElement(By by) {
 		return element.findElement(by);
 	}
 
@@ -145,11 +147,11 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public boolean hasElement(By by) {
-		return numberOfElements(by) > 0;
+		return element.hasElement(by);
 	}
 
 	public int numberOfElements(By by) {
-		return findElements(by).size();
+		return element.numberOfElements(by);
 	}
 
 	public void click() {
@@ -200,7 +202,35 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return element.getText();
 	}
 
-	public class NullWebElement implements WebElement {
+	public boolean isDisplayed() {
+		return element.isDisplayed();
+	}
+
+	public Point getLocation() {
+		return element.getLocation();
+	}
+
+	public Dimension getSize() {
+		return element.getSize();
+	}
+
+	public void hover() {
+		element.hover();
+	}
+
+	public void dragAndDropBy(int moveRightBy, int moveDownBy) {
+		element.dragAndDropBy(moveRightBy, moveDownBy);
+	}
+
+	public void dragAndDropOn(RenderedWebElement element) {
+		element.dragAndDropOn(element);
+	}
+
+	public String getValueOfCssProperty(String propertyName) {
+		return element.getValueOfCssProperty(propertyName);
+	}
+
+	public class NullWebElement implements SlimWebElement {
 
 		@Override
 		public void click() {
@@ -268,8 +298,53 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		}
 
 		@Override
-		public WebElement findElement(By by) {
-			return new SlimWebElement(webDriver.findElement(by));
+		public SlimWebElement findElement(By by) {
+			return new SlimWebElementWrapper(webDriver.findElement(by));
+		}
+
+		@Override
+		public boolean isDisplayed() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public Point getLocation() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public Dimension getSize() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public void hover() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public void dragAndDropBy(int moveRightBy, int moveDownBy) {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public void dragAndDropOn(RenderedWebElement element) {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public String getValueOfCssProperty(String propertyName) {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public boolean hasElement(By by) {
+			return numberOfElements(by) > 0;
+		}
+
+		@Override
+		public int numberOfElements(By by) {
+			return findElements(by).size();
 		}
 	}
 
