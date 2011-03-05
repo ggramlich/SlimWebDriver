@@ -49,8 +49,12 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		}
 	}
 
-	public void useElement(By by) {
-		element = findElement(by);
+	public boolean useElement(By by) {
+		if (hasElement(by)) {
+			element = findElement(by);
+			return true;
+		}
+		return false;
 	}
 
 	public void useWebDriver() {
