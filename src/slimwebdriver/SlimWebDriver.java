@@ -12,14 +12,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
+import slimwebdriver.exceptions.NoWebElementChosenException;
 import fitnesse.slim.Slim;
 
-public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot, FindElementInformation {
+public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot, FindElementInformation,
+	WebElement {
 	private static final ByConverter BY_CONVERTER = new ByConverter();
 
 	private WebDriver webDriver;
 
 	private WebDriverProvider provider;
+
+	private WebElement element = new NullWebElement();
 
 	public SlimWebDriver() {
 		this(null);
@@ -41,6 +45,14 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		} else {
 			webDriver = provider.getDriver(browserType);
 		}
+	}
+
+	public void useElement(By by) {
+		element = findElement(by);
+	}
+
+	public void useWebDriver() {
+		element = new NullWebElement();
 	}
 
 	public void openUrl(String url) {
@@ -76,11 +88,11 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public List<WebElement> findElements(By by) {
-		return webDriver.findElements(by);
+		return element.findElements(by);
 	}
 
 	public WebElement findElement(By by) {
-		return new SlimWebElement(webDriver.findElement(by));
+		return element.findElement(by);
 	}
 
 	public String getPageSource() {
@@ -138,6 +150,127 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 
 	public int numberOfElements(By by) {
 		return findElements(by).size();
+	}
+
+	public void click() {
+		element.click();
+	}
+
+	public void submit() {
+		element.submit();
+	}
+
+	public String getValue() {
+		return element.getValue();
+	}
+
+	public void sendKeys(CharSequence... keysToSend) {
+		element.sendKeys(keysToSend);
+	}
+
+	public void clear() {
+		element.clear();
+	}
+
+	public String getTagName() {
+		return element.getTagName();
+	}
+
+	public String getAttribute(String name) {
+		return element.getAttribute(name);
+	}
+
+	public boolean toggle() {
+		return element.toggle();
+	}
+
+	public boolean isSelected() {
+		return element.isSelected();
+	}
+
+	public void setSelected() {
+		element.setSelected();
+	}
+
+	public boolean isEnabled() {
+		return element.isEnabled();
+	}
+
+	public String getText() {
+		return element.getText();
+	}
+
+	public class NullWebElement implements WebElement {
+
+		@Override
+		public void click() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public void submit() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public String getValue() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public void sendKeys(CharSequence... keysToSend) {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public void clear() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public String getTagName() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public String getAttribute(String name) {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public boolean toggle() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public boolean isSelected() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public void setSelected() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public boolean isEnabled() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public String getText() {
+			throw new NoWebElementChosenException();
+		}
+
+		@Override
+		public List<WebElement> findElements(By by) {
+			return webDriver.findElements(by);
+		}
+
+		@Override
+		public WebElement findElement(By by) {
+			return new SlimWebElement(webDriver.findElement(by));
+		}
 	}
 
 }

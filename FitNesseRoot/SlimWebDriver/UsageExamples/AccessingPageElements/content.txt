@@ -14,16 +14,35 @@ Where method is one of
  * tag name
  * xpath
 
-!|script     |slim web driver   |htmlunit           |
-|open url    |http://localhost:${FITNESSE_PORT}/files/|
-|$element=   |find element      |class name:sidebar   |
-|push fixture                                         |
-|start       |$element                                |
-|$subElement=|find element      |tag name:a           |
-|start       |$subElement                             |
-|check       |get text          |FrontPage            |
-|pop fixture                                          |
-|#now we are back on the webdriver                    |
-|check       |title             |Files: files/        |
-|ensure|has element|class name:sidebar|
-|reject|has element|class name:aaa|
+!|script         |slim web driver       |${BROWSER}               |
+|open url        |http://localhost:${FITNESSE_PORT}/files/        |
+|$element=       |find element          |class name:sidebar       |
+|#now we push the webdriver and use the element as the table actor|
+|push fixture                                                     |
+|start           |$element                                        |
+|reject          |has element           |class name:sidebar       |
+|$subElement=    |find element          |tag name:a               |
+|#we do not push the $element, but simply use the subElement      |
+|start           |$subElement                                     |
+|check           |get text              |FrontPage                |
+|pop fixture                                                      |
+|#now we are back on the webdriver                                |
+|check           |title                 |Files: files/            |
+|ensure          |has element           |class name:sidebar       |
+|reject          |has element           |class name:aaa           |
+
+But it is much easier and more readable to use <SlimWebDriver's special ''use element'' method.
+
+!|script        |slim web driver                               |
+|open url       |http://localhost:${FITNESSE_PORT}/files/      |
+|use element    |class name:sidebar                            |
+|use element    |tag name:a                                    |
+|#the a element itself has no sub elements a                   |
+|reject         |has element             |tag name:a           |
+|check          |get text                |FrontPage            |
+|#methods that only exist on the web driver are still available|
+|check          |title                   |Files: files/        |
+|use web driver                                                |
+|#now we are back on the web driver sub elements a             |
+|ensure         |has element             |tag name:a           |
+
