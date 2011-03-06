@@ -57,6 +57,26 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return false;
 	}
 
+	public boolean useInnerElement(By by) {
+		if (hasInnerElement(by)) {
+			element = findInnerElement(by);
+			return true;
+		}
+		return false;
+	}
+
+	public SlimWebElement findInnerElement(By by) {
+		return element.findElement(by);
+	}
+
+	public boolean hasInnerElement(By by) {
+		return element.hasElement(by);
+	}
+
+	public int numberOfInnerElements(By by) {
+		return element.numberOfElements(by);
+	}
+
 	public void useWebDriver() {
 		element = new NullWebElement();
 	}
@@ -94,11 +114,11 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public List<WebElement> findElements(By by) {
-		return element.findElements(by);
+		return webDriver.findElements(by);
 	}
 
 	public SlimWebElement findElement(By by) {
-		return element.findElement(by);
+		return new SlimWebElementWrapper(webDriver.findElement(by));
 	}
 
 	public String getPageSource() {
@@ -159,11 +179,11 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public boolean hasElement(By by) {
-		return element.hasElement(by);
+		return numberOfElements(by) > 0;
 	}
 
 	public int numberOfElements(By by) {
-		return element.numberOfElements(by);
+		return findElements(by).size();
 	}
 
 	public void click() {

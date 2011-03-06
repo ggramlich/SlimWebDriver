@@ -31,18 +31,22 @@ Where method is one of
 |ensure          |has element           |class name:sidebar       |
 |reject          |has element           |class name:aaa           |
 
-But it is much easier and more readable to use <SlimWebDriver's special ''use element'' method.
+But it is easier and more readable to use <SlimWebDriver's special ''use element'' and ''use inner element'' methods.
+It also provides ''has inner element'' and ''number of inner elements''.
 
-!|script        |slim web driver                               |
-|open url       |http://localhost:${FITNESSE_PORT}/files/      |
-|use element    |class name:sidebar                            |
-|use element    |tag name:a                                    |
-|#the a element itself has no sub elements a                   |
-|reject         |has element             |tag name:a           |
-|check          |get text                |FrontPage            |
-|#methods that only exist on the web driver are still available|
-|check          |title                   |Files: files/        |
-|use web driver                                                |
-|#now we are back on the web driver sub elements a             |
-|ensure         |has element             |tag name:a           |
+!|script              |slim web driver                                    |
+|open url             |http://localhost:${FITNESSE_PORT}/files/           |
+|use element          |class name:sidebar                                 |
+|#the ''inner'' methods now find elements within the element just selected|
+|ensure               |has inner element            |tag name:a           |
+|check                |number of inner elements     |tag name:a      |1   |
+|#now we use the a element                                                |
+|use inner element    |tag name:a                                         |
+|#the a element itself has no sub elements a                              |
+|check                |get text                     |FrontPage            |
+|reject               |has inner element            |tag name:a           |
+|#the web driver's methods are alway available                            |
+|check                |title                        |Files: files/        |
+|#now using the web driver to find the a sub elements on the whole page   |
+|ensure               |has element                  |tag name:a           |
 
