@@ -15,13 +15,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
-import slimwebdriver.exceptions.NoWebElementChosenException;
 import fitnesse.slim.Slim;
 
 public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot, SlimWebElement {
 	private static final ByConverter BY_CONVERTER = new ByConverter();
 
-	private WebDriver webDriver;
+	WebDriver webDriver;
 
 	private WebDriverProvider provider;
 
@@ -264,124 +263,6 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 
 	public String getValueOfCssProperty(String propertyName) {
 		return element.getValueOfCssProperty(propertyName);
-	}
-
-	public class NullWebElement implements SlimWebElement {
-
-		@Override
-		public void click() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public void submit() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public String getValue() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public void sendKeys(CharSequence... keysToSend) {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public void clear() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public String getTagName() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public String getAttribute(String name) {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public boolean toggle() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public boolean isSelected() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public void setSelected() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public boolean isEnabled() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public String getText() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public List<WebElement> findElements(By by) {
-			return webDriver.findElements(by);
-		}
-
-		@Override
-		public SlimWebElement findElement(By by) {
-			return new SlimWebElementWrapper(webDriver.findElement(by));
-		}
-
-		@Override
-		public boolean isDisplayed() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public Point getLocation() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public Dimension getSize() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public void hover() {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public void dragAndDropBy(int moveRightBy, int moveDownBy) {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public void dragAndDropOn(RenderedWebElement element) {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public String getValueOfCssProperty(String propertyName) {
-			throw new NoWebElementChosenException();
-		}
-
-		@Override
-		public boolean hasElement(By by) {
-			return numberOfElements(by) > 0;
-		}
-
-		@Override
-		public int numberOfElements(By by) {
-			return findElements(by).size();
-		}
 	}
 
 }
