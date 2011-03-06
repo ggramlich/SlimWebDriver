@@ -10,4 +10,9 @@ public interface SlimWebElement extends RenderedWebElement, FindElementInformati
 	public void sendKey(Keys key);
 
 	public boolean containsText(String text);
+
+	public void selectByValue(String value);
+
+	public void selectByText(String text);
+
 }

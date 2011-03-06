@@ -7,10 +7,9 @@ These should go into a ScenarioLibrary page
 |open url |${PARK_CALC}            |
 |check    |title|Parking Calculator|
 
-!|scenario        |Select _ Lot        |name        |
-|use element      |id:Lot                           |
-|use inner element|xpath:option[contains(.,'@name')]|
-|set selected                                       |
+!|scenario     |Select _ Lot|name|
+|use element   |id:Lot           |
+|select by text|@name            |
 
 !|scenario  |Page contains|text         |
 |use element|tag name:body              |
@@ -67,8 +66,13 @@ These should go into a ScenarioLibrary page
 
 If you want to verify a lot of time differences an costs, you can use a decision table that uses scenarios.
 
-!|Parking from at to at takes and costs                                                         |
-|Lot type       |Entry Time|Entry Date|Exit Time|Exit Date |Time Difference             |Cost   |
-|Economy Parking|01:23 AM  |02/28/2000|12:34 AM |03/01/2000|1 Days, 23 Hours, 11 Minutes|$ 18.00|
-|Economy Parking|11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 8.00 |
+!|Parking from at to at takes and costs                                                                   |
+|Lot type                 |Entry Time|Entry Date|Exit Time|Exit Date |Time Difference             |Cost   |
+|Economy Parking          |01:23 AM  |02/28/2000|12:34 AM |03/01/2000|1 Days, 23 Hours, 11 Minutes|$ 18.00|
+|Economy Parking          |11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 8.00 |
+|Short-Term Parking       |11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 3.00 |
+|Long-Term Surface Parking|11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 4.00 |
+|Valet Parking            |11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 12.00|
+
+
 

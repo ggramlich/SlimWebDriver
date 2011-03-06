@@ -113,4 +113,12 @@ public class NullWebElement implements SlimWebElement {
 		throw new NoWebElementChosenException();
 	}
 
+	public void selectByValue(String value) {
+		throw new NoWebElementChosenException();
+	}
+
+	public void selectByText(String text) {
+		throw new NoWebElementChosenException();
+	}
+
 }

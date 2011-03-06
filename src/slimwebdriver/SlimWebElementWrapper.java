@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.RenderedWebElement;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class SlimWebElementWrapper implements SlimWebElement {
 
@@ -123,6 +124,18 @@ public class SlimWebElementWrapper implements SlimWebElement {
 
 	public boolean containsText(String text) {
 		return webElement.getText().contains(text);
+	}
+
+	public void selectByValue(String value) {
+		createSelect().selectByValue(value);
+	}
+
+	public void selectByText(String text) {
+		createSelect().selectByVisibleText(text);
+	}
+
+	private Select createSelect() {
+		return new Select(this);
 	}
 
 }

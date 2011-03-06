@@ -274,4 +274,14 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return slimElement.containsText(text);
 	}
 
+	@Override
+	public void selectByValue(String value) {
+		slimElement.selectByValue(value);
+	}
+
+	@Override
+	public void selectByText(String text) {
+		slimElement.selectByText(text);
+	}
+
 }
