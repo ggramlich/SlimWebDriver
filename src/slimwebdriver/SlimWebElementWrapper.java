@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.RenderedWebElement;
 import org.openqa.selenium.WebElement;
 
@@ -38,6 +39,10 @@ public class SlimWebElementWrapper implements SlimWebElement {
 
 	public void sendKeys(CharSequence... keysToSend) {
 		webElement.sendKeys(keysToSend);
+	}
+
+	public void sendKey(Keys key) {
+		webElement.sendKeys(key);
 	}
 
 	public void clear() {
@@ -114,6 +119,10 @@ public class SlimWebElementWrapper implements SlimWebElement {
 
 	public int numberOfElements(By by) {
 		return findElements(by).size();
+	}
+
+	public boolean containsText(String text) {
+		return webElement.getText().contains(text);
 	}
 
 }

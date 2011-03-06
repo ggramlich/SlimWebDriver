@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.RenderedWebElement;
 import org.openqa.selenium.TakesScreenshot;
@@ -24,7 +25,7 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 
 	private WebDriverProvider provider;
 
-	private SlimWebElement element = new NullWebElement();
+	private SlimWebElement slimElement = new NullWebElement();
 
 	public SlimWebDriver() {
 		this(null);
@@ -50,7 +51,7 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 
 	public boolean useElement(By by) {
 		if (hasElement(by)) {
-			element = findElement(by);
+			slimElement = findElement(by);
 			return true;
 		}
 		return false;
@@ -58,26 +59,26 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 
 	public boolean useInnerElement(By by) {
 		if (hasInnerElement(by)) {
-			element = findInnerElement(by);
+			slimElement = findInnerElement(by);
 			return true;
 		}
 		return false;
 	}
 
 	public SlimWebElement findInnerElement(By by) {
-		return element.findElement(by);
+		return slimElement.findElement(by);
 	}
 
 	public boolean hasInnerElement(By by) {
-		return element.hasElement(by);
+		return slimElement.hasElement(by);
 	}
 
 	public int numberOfInnerElements(By by) {
-		return element.numberOfElements(by);
+		return slimElement.numberOfElements(by);
 	}
 
 	public void useWebDriver() {
-		element = new NullWebElement();
+		slimElement = new NullWebElement();
 	}
 
 	public void openUrl(String url) {
@@ -186,75 +187,79 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public void click() {
-		element.click();
+		slimElement.click();
 	}
 
 	public void submit() {
-		element.submit();
+		slimElement.submit();
 	}
 
 	public String getValue() {
-		return element.getValue();
+		return slimElement.getValue();
 	}
 
 	public void sendKeys(CharSequence keysToSend) {
-		element.sendKeys(keysToSend);
+		slimElement.sendKeys(keysToSend);
 	}
 
 	public void sendKeys(CharSequence... keysToSend) {
-		element.sendKeys(keysToSend);
+		slimElement.sendKeys(keysToSend);
+	}
+
+	public void sendKey(Keys key) {
+		slimElement.sendKeys(key);
 	}
 
 	public void clear() {
-		element.clear();
+		slimElement.clear();
 	}
 
 	public String getTagName() {
-		return element.getTagName();
+		return slimElement.getTagName();
 	}
 
 	public String getAttribute(String name) {
-		return element.getAttribute(name);
+		return slimElement.getAttribute(name);
 	}
 
 	public boolean toggle() {
-		return element.toggle();
+		return slimElement.toggle();
 	}
 
 	public boolean isSelected() {
-		return element.isSelected();
+		return slimElement.isSelected();
 	}
 
 	public void setSelected() {
-		element.setSelected();
+		slimElement.setSelected();
 	}
 
 	public boolean isEnabled() {
-		return element.isEnabled();
+		return slimElement.isEnabled();
 	}
 
 	public String getText() {
-		return element.getText();
+		return slimElement.getText();
 	}
 
 	public boolean isDisplayed() {
-		return element.isDisplayed();
+		return slimElement.isDisplayed();
 	}
 
 	public Point getLocation() {
-		return element.getLocation();
+		return slimElement.getLocation();
 	}
 
 	public Dimension getSize() {
-		return element.getSize();
+		return slimElement.getSize();
 	}
 
 	public void hover() {
-		element.hover();
+		slimElement.hover();
 	}
 
 	public void dragAndDropBy(int moveRightBy, int moveDownBy) {
-		element.dragAndDropBy(moveRightBy, moveDownBy);
+		slimElement.dragAndDropBy(moveRightBy, moveDownBy);
 	}
 
 	public void dragAndDropOn(RenderedWebElement element) {
@@ -262,7 +267,11 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public String getValueOfCssProperty(String propertyName) {
-		return element.getValueOfCssProperty(propertyName);
+		return slimElement.getValueOfCssProperty(propertyName);
+	}
+
+	public boolean containsText(String text) {
+		return slimElement.containsText(text);
 	}
 
 }
