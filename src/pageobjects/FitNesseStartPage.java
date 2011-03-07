@@ -16,7 +16,7 @@ public class FitNesseStartPage extends SlimPageObject {
 
 	public boolean goToFilesPage() {
 		filesLink.click();
-		return weAreOnPage(DemoFitnessePageFactory.FILES_PAGE);
+		return transitionToPage(new FitNesseFilesPage());
 	}
 
 }

@@ -8,14 +8,14 @@ It is convenient to additionally have the web driver available as a library fixt
 |import     |
 |pageobjects|
 
-!|script                         |demo fitnesse page factory                                 |
-|open url                        |${FITNESSE_STARTPAGE}                                      |
+!|script                                                                                     |
+|open url                         |${FITNESSE_STARTPAGE}                                     |
 |#the following line switches the current table actor to the ''fitnesse startpage'' object   |
-|we are on page                  |fitnesse startpage                                         |
+|start                            |FitNesse start page                                       |
 |#the following line switches the current table actor to the ''files'' page object           |
 |go to files page                                                                            |
 |#the following line switches the current table actor to the ''delays with ajax'' page object|
 |go to delays with ajax                                                                      |
 |#now we can interact with the page                                                          |
-|change title to                 |My new title                                               |
-|check                           |get title                   |My new title                  |
+|change title to                  |My new title                                              |
+|check                            |get title                  |My new title                  |

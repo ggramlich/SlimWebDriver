@@ -16,7 +16,7 @@ public class FitNesseFilesPage extends SlimPageObject {
 
 	public boolean goToDelaysWithAjax() {
 		delaysWithAjax.click();
-		return weAreOnPage(DemoFitnessePageFactory.DELAYS_WITH_AJAX);
+		return transitionToPage(new DelaysWithAjaxPage());
 	}
 
 }
