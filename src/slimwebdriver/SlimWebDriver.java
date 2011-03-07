@@ -70,18 +70,6 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return false;
 	}
 
-	public SlimWebElement findInnerElement(By by) {
-		return slimElement.findElement(by);
-	}
-
-	public boolean hasInnerElement(By by) {
-		return slimElement.hasElement(by);
-	}
-
-	public int numberOfInnerElements(By by) {
-		return slimElement.numberOfElements(by);
-	}
-
 	public void useWebDriver() {
 		slimElement = new NullWebElement();
 	}
@@ -191,6 +179,26 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return findElements(by).size();
 	}
 
+	public void deleteAllCookies() {
+		manage().deleteAllCookies();
+	}
+
+	public void deleteCookieNamed(String cookieName) {
+		manage().deleteCookieNamed(cookieName);
+	}
+
+	public SlimWebElement findInnerElement(By by) {
+		return slimElement.findElement(by);
+	}
+
+	public boolean hasInnerElement(By by) {
+		return slimElement.hasElement(by);
+	}
+
+	public int numberOfInnerElements(By by) {
+		return slimElement.numberOfElements(by);
+	}
+
 	public void click() {
 		slimElement.click();
 	}
@@ -268,12 +276,14 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public void dragAndDropOn(RenderedWebElement element) {
-		element.dragAndDropOn(element);
+		slimElement.dragAndDropOn(element);
 	}
 
 	public String getValueOfCssProperty(String propertyName) {
 		return slimElement.getValueOfCssProperty(propertyName);
 	}
+
+	// Special methods in the SlimWebElement interface
 
 	public boolean containsText(String text) {
 		return slimElement.containsText(text);
@@ -286,6 +296,8 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	public void selectByText(String text) {
 		slimElement.selectByText(text);
 	}
+
+	// Methods related to waiting
 
 	public void setTimeOut(int seconds) {
 		timeout = seconds;

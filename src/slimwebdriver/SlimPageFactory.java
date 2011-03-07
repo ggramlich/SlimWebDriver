@@ -47,7 +47,7 @@ public abstract class SlimPageFactory implements StatementExecutorConsumer {
 	}
 
 	private void initPageObject() {
-		pageObject.setSlimWebDriver(slimWebDriver);
+		pageObject.setWebDriver(slimWebDriver.webDriver);
 		pageObject.setSlimPageFactory(this);
 		statementExecutor.setInstance(ACTOR_INSTANCE_NAME, pageObject);
 	}

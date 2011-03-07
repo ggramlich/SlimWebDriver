@@ -9,7 +9,7 @@ public abstract class SlimPageObject {
 
 	public abstract boolean verify();
 
-	public void setSlimWebDriver(SlimWebDriver webDriver) {
+	public void setWebDriver(WebDriver webDriver) {
 		this.webDriver = webDriver;
 	}
 
