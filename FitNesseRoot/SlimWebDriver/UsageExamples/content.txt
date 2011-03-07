@@ -1,3 +1,4 @@
 !define BROWSER {firefox}
+!define FILES_DIR_URL (http://localhost:${FITNESSE_PORT}/files/)
 
 !contents -R2 -g -p -f -h

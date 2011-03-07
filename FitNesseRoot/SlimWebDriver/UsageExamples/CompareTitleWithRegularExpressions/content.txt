@@ -1,5 +1,5 @@
-!|script       |slim web driver       |${BROWSER}       |
-|open url      |http://localhost:${FITNESSE_PORT}/files/|
-|check         |title                 |=~/.*fil.*/      |
-|title contains|fil                                     |
-|close window                                           |
+!|script       |slim web driver|${BROWSER} |
+|open url      |${FILES_DIR_URL}           |
+|check         |title          |=~/.*fil.*/|
+|title contains|fil                        |
+|close window                              |

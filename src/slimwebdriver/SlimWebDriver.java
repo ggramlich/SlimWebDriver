@@ -15,6 +15,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.google.common.base.Function;
 
 import fitnesse.slim.Slim;
 
@@ -26,6 +29,8 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	private WebDriverProvider provider;
 
 	private SlimWebElement slimElement = new NullWebElement();
+
+	private int timeout = 5;
 
 	public SlimWebDriver() {
 		this(null);
@@ -274,14 +279,92 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return slimElement.containsText(text);
 	}
 
-	@Override
 	public void selectByValue(String value) {
 		slimElement.selectByValue(value);
 	}
 
-	@Override
 	public void selectByText(String text) {
 		slimElement.selectByText(text);
+	}
+
+	public void setTimeOut(int seconds) {
+		timeout = seconds;
+	}
+
+	public void waitTime(int milliseconds) throws Exception {
+		Thread.sleep(milliseconds);
+	}
+
+	public void waitForElementToAppear(By by) {
+		iWait().until(elementVisible(by));
+	}
+
+	public void waitForElementToDisappear(By by) {
+		iWait().until(elementInvisible(by));
+	}
+
+	public void waitForElementPresent(By by) {
+		iWait().until(presenceOfElementLocated(by));
+	}
+
+	public void waitForElementAbsent(By by) {
+		iWait().until(absenceOfElementLocated(by));
+	}
+
+	public void waitForCondition(String javascript) {
+		iWait().until(javascriptEvaluatesToTrue("return (" + javascript + ");"));
+	}
+
+	private WebDriverWait iWait() {
+		return new WebDriverWait(webDriver, timeout);
+	}
+
+	private Function<WebDriver, Object> javascriptEvaluatesToTrue(final String javascript) {
+		return new Function<WebDriver, Object>() {
+			public Object apply(WebDriver driver) {
+				return ((JavascriptExecutor) driver).executeScript(javascript);
+			}
+		};
+	}
+
+	private Function<WebDriver, Boolean> presenceOfElementLocated(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return driver.findElements(by).size() > 0;
+			}
+		};
+	}
+
+	private Function<WebDriver, Boolean> absenceOfElementLocated(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return driver.findElements(by).size() == 0;
+			}
+		};
+	}
+
+	private Function<WebDriver, Boolean> elementVisible(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				if (driver.findElements(by).size() == 0) {
+					return false;
+				}
+				WebElement element = driver.findElement(by);
+				return (element instanceof RenderedWebElement) && ((RenderedWebElement) element).isDisplayed();
+			}
+		};
+	}
+
+	private Function<WebDriver, Boolean> elementInvisible(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				if (driver.findElements(by).size() == 0) {
+					return true;
+				}
+				WebElement element = driver.findElement(by);
+				return !((element instanceof RenderedWebElement) && ((RenderedWebElement) element).isDisplayed());
+			}
+		};
 	}
 
 }
