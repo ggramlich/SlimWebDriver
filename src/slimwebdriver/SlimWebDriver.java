@@ -24,6 +24,8 @@ import fitnesse.slim.Slim;
 public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot, SlimWebElement {
 	private static final ByConverter BY_CONVERTER = new ByConverter();
 
+	private static final KeysConverter KEYS_CONVERTER = new KeysConverter();
+
 	WebDriver webDriver;
 
 	private WebDriverProvider provider;
@@ -39,11 +41,12 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	public SlimWebDriver(String browserType) {
 		provider = WebDriverProvider.INSTANCE;
 		setBrowserType(browserType);
-		registerByConverter();
+		registerConverters();
 	}
 
-	private void registerByConverter() {
+	private void registerConverters() {
 		Slim.addConverter(By.class, BY_CONVERTER);
+		Slim.addConverter(Keys.class, KEYS_CONVERTER);
 	}
 
 	private void setBrowserType(String browserType) {
