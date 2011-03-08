@@ -18,14 +18,14 @@ These should go into a ScenarioLibrary page
 !|scenario  |Set _ Time _ _             |type,time,ampm             |
 |use element|id:@typeTime                                           |
 |clear                                                              |
-|send keys  |@time                                                  |
+|enter text |@time                                                  |
 |use element|xpath://input[@name='@typeTimeAMPM' and @value='@ampm']|
 |set selected                                                       |
 
 !|scenario  |Set _ Date _|type,date|
 |use element|id:@typeDate          |
 |clear                             |
-|send keys  |@date                 |
+|enter text |@date                 |
 
 !|scenario  |Calculate Cost|
 |use element|name:Submit   |

@@ -21,7 +21,7 @@ You can use the following methods on <SlimWebDriver.
 !|scenario  |set title|title|
 |use element|id:newTitle    |
 |clear                      |
-|send keys  |@title         |
+|enter text |@title         |
 |use element|id:changeTitle |
 |click                      |
 

@@ -146,12 +146,20 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		stopWebDriver();
 	}
 
+	public Object executeScript(String script) {
+		return ((JavascriptExecutor) webDriver).executeScript(script);
+	}
+
 	public Object executeScript(String script, Object args) {
 		return ((JavascriptExecutor) webDriver).executeScript(script, args);
 	}
 
 	public Object executeScript(String script, Object... args) {
 		return ((JavascriptExecutor) webDriver).executeScript(script, args);
+	}
+
+	public Object executeAsyncScript(String script) {
+		return ((JavascriptExecutor) webDriver).executeAsyncScript(script);
 	}
 
 	public Object executeAsyncScript(String script, Object args) {
@@ -211,7 +219,7 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return slimElement.getValue();
 	}
 
-	public void sendKeys(CharSequence keysToSend) {
+	public void enterText(String keysToSend) {
 		slimElement.sendKeys(keysToSend);
 	}
 
