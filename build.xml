@@ -1,0 +1,61 @@
+<project name="SlimWebDriver" default="dist" basedir=".">
+	<description>
+		Build the SlimWebDriver zip
+	</description>
+
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+
+	<path id="classpath">
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the source ">
+		<javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
+	</target>
+
+	<target name="dist" depends="clean, compile" description="generate the distribution">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}/SlimWebDriver/lib" />
+
+		<!-- Put everything in ${build} into the SlimWebDriver.jar file -->
+		<jar jarfile="${dist}/SlimWebDriver/lib/SlimWebDriver.jar" basedir="${build}" >
+		</jar>
+		
+		<!-- Copy the other lib files -->
+		<copy todir="${dist}/SlimWebDriver/lib">
+			<fileset dir="lib">
+			</fileset>
+		</copy>
+
+		<!-- Copy the FitNesse wiki -->
+		<copy todir="${dist}/SlimWebDriver/FitNesseRoot">
+			<fileset dir="FitNesseRoot">
+				<exclude name="ErrorLogs/**" />
+				<exclude name="RecentChanges/**" />
+				<exclude name="files/images/FitNesseInstallerLogo.png" />
+				<exclude name="files/images/*.psd" />
+				<exclude name="files/testResults/**" />
+			</fileset>
+		</copy>
+
+		<!-- Create the zip file -->
+		<zip destfile="${dist}/SlimWebDriver-${DSTAMP}.zip" basedir="${dist}" includes="SlimWebDriver/**" />
+	</target>
+
+	<target name="clean" description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+</project>
