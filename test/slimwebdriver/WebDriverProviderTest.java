@@ -86,6 +86,7 @@ public class WebDriverProviderTest {
 	@Test
 	public void closeWindowShouldNotCauseOtherDriverToBeUsedWhenMoreWindowsAreOpen() throws Exception {
 		WebDriver driver = provider.getDriver(HTMLUNIT);
+		driver.get("http://www.google.com");
 		((JavascriptExecutor) driver).executeScript("window.open('', 'other window')");
 		provider.closeWindow(driver);
 		assertSame(driver, provider.getDriver(HTMLUNIT));

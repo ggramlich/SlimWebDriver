@@ -1,20 +1,20 @@
 package slimwebdriver;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.RenderedWebElement;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Function;
@@ -114,7 +114,7 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public SlimWebElement findElement(By by) {
-		return new SlimWebElementWrapper(webDriver.findElement(by));
+		return new SlimWebElementWrapper(webDriver.findElement(by), webDriver);
 	}
 
 	public String getPageSource() {
@@ -173,10 +173,6 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return ((JavascriptExecutor) webDriver).executeAsyncScript(script, args);
 	}
 
-	public boolean isJavascriptEnabled() {
-		return ((JavascriptExecutor) webDriver).isJavascriptEnabled();
-	}
-
 	// TODO - provide method that saves a file
 	public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
 		return ((TakesScreenshot) webDriver).getScreenshotAs(target);
@@ -218,8 +214,9 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		slimElement.submit();
 	}
 
+	@Deprecated
 	public String getValue() {
-		return slimElement.getValue();
+		return slimElement.getAttribute("value");
 	}
 
 	public void enterText(String keysToSend) {
@@ -246,14 +243,17 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return slimElement.getAttribute(name);
 	}
 
+	@Deprecated
 	public boolean toggle() {
-		return slimElement.toggle();
+		slimElement.click();
+		return slimElement.isSelected();
 	}
 
 	public boolean isSelected() {
 		return slimElement.isSelected();
 	}
 
+	@Deprecated
 	public void setSelected() {
 		slimElement.setSelected();
 	}
@@ -279,19 +279,24 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	public void hover() {
-		slimElement.hover();
+		actionsBuilder().moveToElement(this).build().perform();
 	}
 
 	public void dragAndDropBy(int moveRightBy, int moveDownBy) {
-		slimElement.dragAndDropBy(moveRightBy, moveDownBy);
+		actionsBuilder().dragAndDropBy(this, moveRightBy, moveDownBy).build().perform();
 	}
 
-	public void dragAndDropOn(RenderedWebElement element) {
-		slimElement.dragAndDropOn(element);
+	public void dragAndDropOn(WebElement element) {
+		actionsBuilder().dragAndDrop(this, element).build().perform();
 	}
 
+	public String getCssValue(String propertyName) {
+		return slimElement.getCssValue(propertyName);
+	}
+
+	@Deprecated
 	public String getValueOfCssProperty(String propertyName) {
-		return slimElement.getValueOfCssProperty(propertyName);
+		return getCssValue(propertyName);
 	}
 
 	// Special methods in the SlimWebElement interface
@@ -373,7 +378,7 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 					return false;
 				}
 				WebElement element = driver.findElement(by);
-				return (element instanceof RenderedWebElement) && ((RenderedWebElement) element).isDisplayed();
+				return element.isDisplayed();
 			}
 		};
 	}
@@ -385,9 +390,13 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 					return true;
 				}
 				WebElement element = driver.findElement(by);
-				return !((element instanceof RenderedWebElement) && ((RenderedWebElement) element).isDisplayed());
+				return !element.isDisplayed();
 			}
 		};
+	}
+
+	private Actions actionsBuilder() {
+		return new Actions(webDriver);
 	}
 
 }

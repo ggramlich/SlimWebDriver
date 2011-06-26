@@ -1,25 +1,23 @@
 package slimwebdriver;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.RenderedWebElement;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class SlimWebElementWrapper implements SlimWebElement {
 
 	private final WebElement webElement;
+	private final WebDriver webDriver;
 
-	public SlimWebElementWrapper(WebElement webElement) {
+	public SlimWebElementWrapper(WebElement webElement, WebDriver webDriver) {
 		this.webElement = webElement;
-	}
-
-	private RenderedWebElement renderedWebElement() {
-		return ((RenderedWebElement) webElement);
+		this.webDriver = webDriver;
 	}
 
 	public String toString() {
@@ -32,10 +30,6 @@ public class SlimWebElementWrapper implements SlimWebElement {
 
 	public void submit() {
 		webElement.submit();
-	}
-
-	public String getValue() {
-		return webElement.getValue();
 	}
 
 	public void sendKeys(CharSequence... keysToSend) {
@@ -59,7 +53,8 @@ public class SlimWebElementWrapper implements SlimWebElement {
 	}
 
 	public boolean toggle() {
-		return webElement.toggle();
+		webElement.click();
+		return webElement.isSelected();
 	}
 
 	public boolean isSelected() {
@@ -67,7 +62,7 @@ public class SlimWebElementWrapper implements SlimWebElement {
 	}
 
 	public void setSelected() {
-		webElement.setSelected();
+		webElement.click();
 	}
 
 	public boolean isEnabled() {
@@ -83,35 +78,23 @@ public class SlimWebElementWrapper implements SlimWebElement {
 	}
 
 	public SlimWebElement findElement(By by) {
-		return new SlimWebElementWrapper(webElement.findElement(by));
+		return new SlimWebElementWrapper(webElement.findElement(by), webDriver);
 	}
 
 	public boolean isDisplayed() {
-		return renderedWebElement().isDisplayed();
+		return webElement.isDisplayed();
 	}
 
 	public Point getLocation() {
-		return renderedWebElement().getLocation();
+		return webElement.getLocation();
 	}
 
 	public Dimension getSize() {
-		return renderedWebElement().getSize();
+		return webElement.getSize();
 	}
 
-	public void hover() {
-		renderedWebElement().hover();
-	}
-
-	public void dragAndDropBy(int moveRightBy, int moveDownBy) {
-		renderedWebElement().dragAndDropBy(moveRightBy, moveDownBy);
-	}
-
-	public void dragAndDropOn(RenderedWebElement element) {
-		renderedWebElement().dragAndDropOn(element);
-	}
-
-	public String getValueOfCssProperty(String propertyName) {
-		return renderedWebElement().getValueOfCssProperty(propertyName);
+	public String getCssValue(String propertyName) {
+		return webElement.getCssValue(propertyName);
 	}
 
 	public boolean hasElement(By by) {

@@ -1,12 +1,11 @@
 package slimwebdriver;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.RenderedWebElement;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
 import slimwebdriver.exceptions.NoWebElementChosenException;
@@ -85,22 +84,6 @@ public class NullWebElement implements SlimWebElement {
 		throw new NoWebElementChosenException();
 	}
 
-	public void hover() {
-		throw new NoWebElementChosenException();
-	}
-
-	public void dragAndDropBy(int moveRightBy, int moveDownBy) {
-		throw new NoWebElementChosenException();
-	}
-
-	public void dragAndDropOn(RenderedWebElement element) {
-		throw new NoWebElementChosenException();
-	}
-
-	public String getValueOfCssProperty(String propertyName) {
-		throw new NoWebElementChosenException();
-	}
-
 	public boolean hasElement(By by) {
 		throw new NoWebElementChosenException();
 	}
@@ -118,6 +101,10 @@ public class NullWebElement implements SlimWebElement {
 	}
 
 	public void selectByText(String text) {
+		throw new NoWebElementChosenException();
+	}
+
+	public String getCssValue(String propertyName) {
 		throw new NoWebElementChosenException();
 	}
 

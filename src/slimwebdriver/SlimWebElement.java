@@ -2,9 +2,9 @@ package slimwebdriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.RenderedWebElement;
+import org.openqa.selenium.WebElement;
 
-public interface SlimWebElement extends RenderedWebElement, FindElementInformation {
+public interface SlimWebElement extends WebElement, FindElementInformation {
 	public SlimWebElement findElement(By by);
 
 	public void sendKey(Keys key);
