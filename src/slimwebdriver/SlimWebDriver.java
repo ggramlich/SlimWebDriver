@@ -253,11 +253,6 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 		return slimElement.isSelected();
 	}
 
-	@Deprecated
-	public void setSelected() {
-		slimElement.setSelected();
-	}
-
 	public boolean isEnabled() {
 		return slimElement.isEnabled();
 	}
