@@ -19,7 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Function;
 
-import fitnesse.slim.Slim;
+import fitnesse.slim.converters.ConverterRegistry;
 
 public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreenshot, SlimWebElement {
 	private static final ByConverter BY_CONVERTER = new ByConverter();
@@ -45,8 +45,8 @@ public class SlimWebDriver implements WebDriver, JavascriptExecutor, TakesScreen
 	}
 
 	private void registerConverters() {
-		Slim.addConverter(By.class, BY_CONVERTER);
-		Slim.addConverter(Keys.class, KEYS_CONVERTER);
+		ConverterRegistry.addConverter(By.class, BY_CONVERTER);
+		ConverterRegistry.addConverter(Keys.class, KEYS_CONVERTER);
 	}
 
 	private void setBrowserType(String browserType) {
